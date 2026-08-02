@@ -1,6 +1,7 @@
 # 🐍 Snake Neon 
 
-![Uploading qw1.jpg…]()
+<img width="2447" height="2400" alt="qw1" src="https://github.com/user-attachments/assets/0b891ea3-8fa6-4335-8371-874d255932a5" />
+
 
 
 [![Android](https://img.shields.io/badge/Platform-Android-green.svg)](https://developer.android.com/)

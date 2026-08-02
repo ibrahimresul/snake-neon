@@ -1,8 +1,6 @@
 # 🐍 Snake Neon 
 
-<img width="1080" height="2400" alt="Screenshot_2026-08-02-22-31-35-144_com example snake" src="https://github.com/user-attachments/assets/cb2272b7-3b0c-413c-982f-907cbf1062c0" />
-<img width="1080" height="2400" alt="Screenshot_2026-08-02-22-29-06-517_com example snake" src="https://github.com/user-attachments/assets/260715be-9afb-40fd-b572-016c81773d58" />
-<img width="1080" height="2400" alt="Screenshot_2026-08-02-22-26-03-761_com example snake" src="https://github.com/user-attachments/assets/ee7c0bac-26c2-43f2-a399-9b837a760dc5" />
+![Uploading qw1.jpg…]()
 
 
 [![Android](https://img.shields.io/badge/Platform-Android-green.svg)](https://developer.android.com/)

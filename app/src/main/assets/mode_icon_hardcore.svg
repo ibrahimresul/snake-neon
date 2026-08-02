@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <filter id="glowHardcore" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3.5" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Dark Octagonal Card Background -->
+  <polygon points="25,5 95,5 115,25 115,95 95,115 25,115 5,95 5,25" fill="#240406" stroke="#ef4444" stroke-width="3" filter="url(#glowHardcore)" />
+  <polygon points="27,8 93,8 112,27 112,93 93,112 27,112 8,93 8,27" fill="none" stroke="#fca5a5" stroke-width="1.2" opacity="0.6" />
+
+  <!-- Hardcore Skull Icon -->
+  <g filter="url(#glowHardcore)">
+    <!-- Skull Top -->
+    <path d="M 40 45 C 40 28, 80 28, 80 45 C 80 54, 75 58, 72 63 L 48 63 C 45 58, 40 54, 40 45 Z" fill="none" stroke="#ef4444" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
+    <!-- Jaw & Teeth -->
+    <path d="M 52 63 L 52 72 L 68 72 L 68 63 M 57 63 L 57 72 M 63 63 L 63 72" stroke="#ef4444" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    <!-- Eye Sockets -->
+    <circle cx="51" cy="46" r="5" fill="#ef4444" />
+    <circle cx="69" cy="46" r="5" fill="#ef4444" />
+    <!-- Nose Hole -->
+    <polygon points="60,53 57,58 63,58" fill="#ef4444" />
+  </g>
+
+  <!-- Danger X Markings -->
+  <path d="M 85 65 L 93 73 M 93 65 L 85 73" stroke="#f87171" stroke-width="2.5" stroke-linecap="round" />
+</svg>

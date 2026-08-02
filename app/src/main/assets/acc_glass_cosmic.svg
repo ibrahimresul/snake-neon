@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50">
+  <defs>
+    <linearGradient id="cosmicGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b0764"/>
+      <stop offset="50%" stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+  </defs>
+  <path d="M5 12 Q50 6 95 12 L90 38 Q50 44 10 38 Z" fill="url(#cosmicGrad)" stroke="#c084fc" stroke-width="3"/>
+  <circle cx="20" cy="20" r="1.5" fill="#ffffff"/>
+  <circle cx="35" cy="30" r="1" fill="#f472b6"/>
+  <circle cx="50" cy="18" r="2" fill="#a855f7"/>
+  <circle cx="68" cy="28" r="1.5" fill="#38bdf8"/>
+  <circle cx="82" cy="22" r="1" fill="#ffffff"/>
+  <path d="M22 15 L26 15 M24 13 L24 17" stroke="#ffffff" stroke-width="1.5"/>
+  <path d="M74 32 L78 32 M76 30 L76 34" stroke="#ffffff" stroke-width="1.5"/>
+</svg>

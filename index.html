@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Snake Neon - Cyber Yılan Oyunu</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app-container" class="app-container">
+        <!-- Header Section -->
+        <header class="game-header">
+            <div class="logo">
+                <span class="logo-text">🐍 SNAKE NEON</span>
+            </div>
+            <div class="scoreboard">
+                <div class="score-badge">
+                    <span class="score-label">🏆 SKOR</span>
+                    <span id="current-score" class="score-value">0</span>
+                </div>
+                <div class="score-badge best-badge">
+                    <span class="score-label">👑 EN YÜKSEK</span>
+                    <span id="high-score" class="score-value">0</span>
+                </div>
+                <div class="score-badge coin-badge">
+                    <span class="score-label">🪙 COIN</span>
+                    <span class="score-value coin-val-text"><span id="header-coins">100</span></span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="settings-header-btn" class="icon-btn text-icon-btn" aria-label="Ayarlar" title="Ayarlar">
+                    ⚙️
+                </button>
+                <button id="theme-btn" class="icon-btn text-icon-btn" aria-label="Tema" title="Tema">
+                    🎨 TEMA
+                </button>
+                <button id="pause-btn" class="icon-btn" aria-label="Duraklat" title="Duraklat">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Canvas Game Arena -->
+        <main class="game-area">
+            <div id="canvas-wrapper" class="canvas-wrapper">
+                <div id="mode-hud-overlay" class="mode-hud-overlay">
+                    <span id="mode-hud-badge" class="mode-hud-badge">🎮 CLASSIC</span>
+                    <span id="mode-hud-info" class="mode-hud-info hidden"></span>
+                </div>
+                <div id="active-powerups-bar" class="active-powerups-bar"></div>
+                <div id="powerup-toast" class="powerup-toast hidden"></div>
+                <canvas id="game-canvas"></canvas>
+            </div>
+        </main>
+
+        <!-- Mobile Controls Section -->
+        <footer class="controls-section">
+            <div class="dpad">
+                <button id="btn-up" class="dpad-btn dpad-up" aria-label="Yukarı">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M12 8l-6 6h12z"/></svg>
+                </button>
+                <button id="btn-left" class="dpad-btn dpad-left" aria-label="Sol">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M14 6l-6 6 6 6z"/></svg>
+                </button>
+                <button id="btn-right" class="dpad-btn dpad-right" aria-label="Sağ">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M10 6l6 6-6 6z"/></svg>
+                </button>
+                <button id="btn-down" class="dpad-btn dpad-down" aria-label="Aşağı">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M12 16l6-6H6z"/></svg>
+                </button>
+                <div class="dpad-center">
+                    <span class="dpad-pulse">🎮</span>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Main Menu Modal -->
+        <div id="main-menu" class="overlay-screen active">
+            <div class="menu-card">
+                <div class="neon-title-wrapper">
+                    <h1 class="neon-title">🐍 SNAKE NEON</h1>
+                    <p class="neon-subtitle">CYBER NEON EDITION</p>
+                </div>
+                
+                <div class="menu-best-score">
+                    <div class="menu-score-pill">
+                        <span class="pill-label">👑 EN YÜKSEK SKOR</span>
+                        <strong id="menu-high-score" class="pill-val">0</strong>
+                    </div>
+                    <div class="menu-score-pill coin-pill">
+                        <span class="pill-label">🪙 TOPLAM COIN</span>
+                        <strong id="menu-coins" class="pill-val">100</strong>
+                    </div>
+                    <div id="menu-active-mode-pill" class="menu-score-pill mode-pill">
+                        <span class="pill-label">🎮 AKTİF MOD</span>
+                        <strong id="menu-active-mode-name" class="pill-val" style="color: #38bdf8;">CLASSIC</strong>
+                    </div>
+                    
+                    <!-- Level & XP Progress Card -->
+                    <div id="menu-level-card" class="menu-score-pill xp-pill" style="grid-column: 1 / -1; margin-top: 6px; padding: 8px 12px; cursor: pointer; background: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.3);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 4px;">
+                            <span id="menu-level-title" style="font-size: 0.72rem; font-weight: 800; color: #f59e0b;">🐣 Beginner</span>
+                            <span id="menu-level-num" style="font-size: 0.82rem; font-weight: 900; color: #c084fc;">LVL 1</span>
+                        </div>
+                        <div style="width: 100%; height: 7px; background: rgba(0,0,0,0.5); border-radius: 4px; overflow: hidden;">
+                            <div id="menu-xp-bar-fill" style="width: 0%; height: 100%; background: linear-gradient(90deg, #a855f7, #ec4899); border-radius: 4px; transition: width 0.3s ease;"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; width: 100%; margin-top: 3px; font-size: 0.65rem; color: #94a3b8; font-weight: 700;">
+                            <span id="menu-xp-progress">0 / 100 XP</span>
+                            <span id="menu-xp-percent">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-buttons">
+                    <button id="start-btn" class="btn btn-primary btn-glow">
+                        ▶️ OYUNA BAŞLA
+                    </button>
+                    <button id="modes-btn" class="btn btn-cyan btn-glow" style="background: linear-gradient(135deg, #06b6d4, #0284c7);">
+                        🎮 OYUN MODLARI
+                    </button>
+                    <button id="shop-btn" class="btn btn-warning btn-glow">
+                        🛒 MAĞAZA
+                    </button>
+                    <button id="customize-btn" class="btn btn-cyan btn-glow">
+                        🎨 ÖZELLEŞTİRME
+                    </button>
+                    <button id="goals-btn" class="btn btn-purple btn-glow" style="background: linear-gradient(135deg, #8b5cf6, #10b981);">
+                        🏆 GÖREVLER & BAŞARIMLAR
+                        <span id="goals-badge" class="menu-badge hidden">YENİ</span>
+                    </button>
+                    <button id="level-rewards-btn" class="btn btn-purple btn-glow" style="background: linear-gradient(135deg, #a855f7, #ec4899);">
+                        ⭐ SEVİYE & ÖDÜLLER
+                        <span id="level-rewards-badge" class="menu-badge hidden">ÖDÜL!</span>
+                    </button>
+                    <button id="how-to-btn" class="btn btn-secondary">
+                        ❓ NASIL OYNANIR
+                    </button>
+                    <button id="settings-btn" class="btn btn-secondary btn-glow" style="background: linear-gradient(135deg, #475569, #334155); border-color: rgba(0, 243, 255, 0.3);">
+                        ⚙️ AYARLAR
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Modal -->
+        <div id="settings-modal" class="overlay-screen hidden">
+            <div class="menu-card info-card" style="max-width: 420px; border-color: rgba(0, 243, 255, 0.4);">
+                <div class="modal-header" style="margin-bottom: 8px;">
+                    <h2 class="card-title neon-cyan" style="margin: 0; font-size: 1.3rem;">⚙️ AYARLAR</h2>
+                </div>
+                <p class="card-desc" style="font-size: 0.8rem; color: #cbd5e1; margin-bottom: 14px; text-align: center;">
+                    Ses, Müzik ve Titreşim Tercihlerinizi Yapılandırın
+                </p>
+
+                <div class="settings-section" style="background: rgba(0,0,0,0.35); padding: 14px; border-radius: 14px; border: 1px solid rgba(0, 243, 255, 0.2); margin-bottom: 14px; display: flex; flex-direction: column; gap: 12px;">
+                    <div style="font-size: 0.85rem; font-weight: 800; color: #38bdf8; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 6px;">
+                        <span>🎵 AUDIO & HAPTIC SETTINGS</span>
+                    </div>
+
+                    <!-- Master Volume -->
+                    <div class="setting-row" style="display: flex; flex-direction: column; gap: 4px;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700; color: #e2e8f0;">
+                            <span>🔊 Master Volume</span>
+                            <span id="master-vol-text" style="color: #38bdf8; font-weight: 900;">80%</span>
+                        </div>
+                        <input type="range" id="master-vol-slider" min="0" max="100" value="80" class="vol-slider">
+                    </div>
+
+                    <!-- Music Toggle & Volume -->
+                    <div class="setting-row" style="display: flex; flex-direction: column; gap: 4px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.8rem; font-weight: 700; color: #e2e8f0;">🎶 Müzik (Music)</span>
+                            <button id="toggle-music-btn" class="toggle-btn active">ON</button>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #94a3b8; margin-top: 2px;">
+                            <span>Müzik Ses Seviyesi</span>
+                            <span id="music-vol-text" style="color: #a855f7; font-weight: 900;">60%</span>
+                        </div>
+                        <input type="range" id="music-vol-slider" min="0" max="100" value="60" class="vol-slider">
+                    </div>
+
+                    <!-- SFX Toggle & Volume -->
+                    <div class="setting-row" style="display: flex; flex-direction: column; gap: 4px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.8rem; font-weight: 700; color: #e2e8f0;">🔉 Ses Efektleri (SFX)</span>
+                            <button id="toggle-sfx-btn" class="toggle-btn active">ON</button>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #94a3b8; margin-top: 2px;">
+                            <span>Efekt Ses Seviyesi</span>
+                            <span id="sfx-vol-text" style="color: #22c55e; font-weight: 900;">75%</span>
+                        </div>
+                        <input type="range" id="sfx-vol-slider" min="0" max="100" value="75" class="vol-slider">
+                    </div>
+
+                    <!-- Vibration Toggle -->
+                    <div class="setting-row" style="display: flex; justify-content: space-between; align-items: center; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.08);">
+                        <div>
+                            <span style="font-size: 0.82rem; font-weight: 700; color: #e2e8f0; display: block;">📳 Titreşim (Vibration)</span>
+                            <span style="font-size: 0.68rem; color: #94a3b8;">Mobil haptic dokunsal geri bildirim</span>
+                        </div>
+                        <button id="toggle-vibe-btn" class="toggle-btn active">ON</button>
+                    </div>
+                </div>
+
+                <!-- Reset & Close Actions -->
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <button id="reset-audio-btn" class="btn btn-secondary" style="font-size: 0.78rem; padding: 8px; border-color: rgba(239, 68, 68, 0.4); color: #fca5a5;">
+                        🔄 RESET AUDIO SETTINGS
+                    </button>
+                    <button id="close-settings-btn" class="btn btn-primary" style="padding: 10px;">
+                        KAPAT
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Modes Modal -->
+        <div id="modes-modal" class="overlay-screen hidden">
+            <div class="menu-card modal-large-card">
+                <div class="modal-header">
+                    <h2 class="card-title neon-blue" style="margin: 0; font-size: 1.3rem;">🎮 OYUN MODLARI</h2>
+                </div>
+                <p class="card-desc" style="text-align: center; margin-bottom: 8px; font-size: 0.85rem; color: #cbd5e1;">
+                    Oyun modunu ve haritanızı seçin.
+                </p>
+
+                <!-- Map Selector in Game Modes Modal -->
+                <div class="modes-map-picker-box" style="margin-bottom: 12px; background: rgba(0,0,0,0.25); padding: 8px 12px; border-radius: 12px; border: 1px solid rgba(56, 189, 248, 0.2);">
+                    <div style="font-size: 0.75rem; font-weight: 800; color: #38bdf8; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">
+                        <span>🗺️ OYNANACAK HARİTA</span>
+                        <span id="active-map-name-label" style="color: #ffd700;">🟩 Klasik Saha</span>
+                    </div>
+                    <div id="modes-map-pills" class="modes-map-pills" style="display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px;"></div>
+                </div>
+
+                <!-- Modes Grid -->
+                <div id="modes-grid" class="modes-grid"></div>
+
+                <button id="close-modes-btn" class="btn btn-primary" style="margin-top: 14px;">
+                    KAPAT
+                </button>
+            </div>
+        </div>
+
+        <!-- How to Play Modal -->
+        <div id="how-to-modal" class="overlay-screen hidden">
+            <div class="menu-card info-card">
+                <h2 class="card-title neon-blue">❓ NASIL OYNANIR?</h2>
+                <div class="instructions-list">
+                    <div class="instruction-item">
+                        <span class="item-num">01</span>
+                        <div class="item-text">
+                            <strong>YEMLERİ YE:</strong> Parlak neon yemleri yiyerek puan topla ve yılanını büyüt.
+                        </div>
+                    </div>
+                    <div class="instruction-item">
+                        <span class="item-num">02</span>
+                        <div class="item-text">
+                            <strong>ENGELLERDEN KAÇIN:</strong> Duvarlara veya yılanın kendi gövdesine çarparsan oyun biter.
+                        </div>
+                    </div>
+                    <div class="instruction-item">
+                        <span class="item-num">03</span>
+                        <div class="item-text">
+                            <strong>MOBİL KONTROL:</strong> Yön butonlarını kullanabilir veya parmağını ekranda sürükleyerek yön verebilirsin.
+                        </div>
+                    </div>
+                    <div class="instruction-item">
+                        <span class="item-num">04</span>
+                        <div class="item-text">
+                            <strong>KLAVYE KONTROL:</strong> Bilgisayarda Yön Tuşları veya W-A-S-D tuşları ile oynayabilirsin.
+                        </div>
+                    </div>
+                </div>
+                <button id="close-how-to-btn" class="btn btn-primary">
+                    ANLADIM, KAPAT
+                </button>
+            </div>
+        </div>
+
+        <!-- Pause Modal -->
+        <div id="pause-modal" class="overlay-screen hidden">
+            <div class="menu-card">
+                <h2 class="card-title neon-blue">⏸️ DURAKLATILDI</h2>
+                <p class="card-desc">Oyun şu anda donduruldu.</p>
+                <div class="menu-buttons">
+                    <button id="resume-btn" class="btn btn-primary btn-glow">
+                        ▶️ DEVAM ET
+                    </button>
+                    <button id="restart-pause-btn" class="btn btn-secondary">
+                        🔄 YENİDEN BAŞLAT
+                    </button>
+                    <button id="menu-pause-btn" class="btn btn-danger">
+                        🏠 ANA MENÜ
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unified Customize Modal (Skins + Maps + Themes) -->
+        <div id="customize-modal" class="overlay-screen hidden">
+            <div class="menu-card shop-card">
+                <div class="shop-header">
+                    <h2 class="card-title neon-cyan" style="margin: 0; font-size: 1.3rem;">🎨 ÖZELLEŞTİRME</h2>
+                </div>
+                <p class="card-desc" style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px;">Sahip olduğun yılan skinlerini, haritaları ve temaları seç</p>
+
+                <!-- Customize Tabs -->
+                <div class="shop-tabs">
+                    <button id="cust-tab-skins" class="shop-tab-btn active">🐍 SKINLER</button>
+                    <button id="cust-tab-maps" class="shop-tab-btn">🗺️ HARİTALAR</button>
+                    <button id="cust-tab-themes" class="shop-tab-btn">🎨 TEMALAR</button>
+                </div>
+
+                <!-- Customize Contents -->
+                <div id="cust-content-skins" class="shop-tab-content active">
+                    <div id="cust-skins-grid" class="skins-grid"></div>
+                </div>
+                <div id="cust-content-maps" class="shop-tab-content hidden">
+                    <div id="cust-maps-grid" class="maps-grid"></div>
+                </div>
+                <div id="cust-content-themes" class="shop-tab-content hidden">
+                    <div id="cust-themes-list" class="themes-list"></div>
+                </div>
+
+                <button id="close-customize-btn" class="btn btn-primary" style="margin-top: 14px;">
+                    KAPAT
+                </button>
+            </div>
+        </div>
+
+        <!-- Unified Goals & Achievements Modal -->
+        <div id="goals-modal" class="overlay-screen hidden">
+            <div class="menu-card modal-large-card">
+                <div class="modal-header">
+                    <h2 class="card-title neon-gold" style="margin: 0; font-size: 1.25rem;">🏆 GÖREVLER & BAŞARIMLAR</h2>
+                    <div id="goals-summary-badge" class="summary-pill" style="color: #ffd700; border-color: rgba(255, 215, 0, 0.4);">
+                        0 / 10
+                    </div>
+                </div>
+
+                <!-- Main Switcher Tabs -->
+                <div class="shop-tabs" style="margin-bottom: 10px;">
+                    <button id="goals-tab-missions" class="shop-tab-btn active">📜 GÖREVLER</button>
+                    <button id="goals-tab-achievements" class="shop-tab-btn">🎖️ BAŞARIMLAR</button>
+                </div>
+
+                <!-- CONTENT 1: MISSIONS -->
+                <div id="goals-content-missions" class="shop-tab-content active">
+                    <div class="shop-tabs" style="margin-bottom: 8px;">
+                        <button id="mission-tab-daily" class="shop-tab-btn active">☀️ GÜNLÜK GÖREVLER</button>
+                        <button id="mission-tab-weekly" class="shop-tab-btn">📅 HAFTALIK GÖREVLER</button>
+                    </div>
+
+                    <div class="mission-timer-bar">
+                        <span id="mission-reset-timer">Yenilenmeye Kalan Süre: 23s 59d</span>
+                    </div>
+
+                    <!-- Missions List -->
+                    <div id="missions-list" class="missions-list"></div>
+                </div>
+
+                <!-- CONTENT 2: ACHIEVEMENTS -->
+                <div id="goals-content-achievements" class="shop-tab-content hidden">
+                    <!-- Overall Stats Box -->
+                    <div class="stats-overview-box">
+                        <div class="progress-bar-container" style="margin-bottom: 10px;">
+                            <div class="progress-bar-label">
+                                <span>BAŞARIM İLERLEMESİ</span>
+                                <strong id="ach-overall-percent">0%</strong>
+                            </div>
+                            <div class="progress-track">
+                                <div id="ach-overall-fill" class="progress-fill" style="width: 0%;"></div>
+                            </div>
+                        </div>
+                        <div class="mini-stats-grid">
+                            <div class="mini-stat-item">
+                                <span class="mini-stat-label">OYUNLAR</span>
+                                <span id="stat-total-games" class="mini-stat-val">0</span>
+                            </div>
+                            <div class="mini-stat-item">
+                                <span class="mini-stat-label">TOPLAM YEM</span>
+                                <span id="stat-total-food" class="mini-stat-val">0</span>
+                            </div>
+                            <div class="mini-stat-item">
+                                <span class="mini-stat-label">REKOR</span>
+                                <span id="stat-high-score" class="mini-stat-val">0</span>
+                            </div>
+                            <div class="mini-stat-item">
+                                <span class="mini-stat-label">HARİTALAR</span>
+                                <span id="stat-played-maps" class="mini-stat-val">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category Tabs -->
+                    <div id="ach-category-tabs" class="category-tabs">
+                        <button class="cat-tab-btn active" data-cat="all">TÜMÜ</button>
+                        <button class="cat-tab-btn" data-cat="getting_started">BAŞLANGIÇ</button>
+                        <button class="cat-tab-btn" data-cat="score">SKOR</button>
+                        <button class="cat-tab-btn" data-cat="food">YEM</button>
+                        <button class="cat-tab-btn" data-cat="games">OYUNLAR</button>
+                        <button class="cat-tab-btn" data-cat="maps">HARİTALAR</button>
+                        <button class="cat-tab-btn" data-cat="skins">SKINLER</button>
+                        <button class="cat-tab-btn" data-cat="powerups">POWER-UP</button>
+                        <button class="cat-tab-btn" data-cat="challenges">MEYDAN OKUMA</button>
+                    </div>
+
+                    <!-- Achievements List -->
+                    <div id="achievements-list" class="achievements-list"></div>
+                </div>
+
+                <button id="close-goals-btn" class="btn btn-primary" style="margin-top: 14px;">
+                    KAPAT
+                </button>
+            </div>
+        </div>
+
+        <!-- Shop Modal -->
+        <div id="shop-modal" class="overlay-screen hidden">
+            <div class="menu-card shop-card">
+                <div class="shop-header">
+                    <h2 class="card-title neon-gold" style="margin: 0; font-size: 1.3rem;">🛒 MAĞAZA</h2>
+                    <div class="shop-coin-pill">
+                        🪙 COIN: <span id="shop-coins-val">100</span>
+                    </div>
+                </div>
+                
+                <!-- Shop Tabs -->
+                <div class="shop-tabs">
+                    <button id="shop-tab-skins" class="shop-tab-btn active">🐍 SKINLER</button>
+                    <button id="shop-tab-maps" class="shop-tab-btn">🗺️ HARİTALAR</button>
+                    <button id="shop-tab-themes" class="shop-tab-btn">🎨 TEMALAR</button>
+                </div>
+
+                <!-- Shop Tab Contents -->
+                <div id="shop-content-skins" class="shop-tab-content active">
+                    <div id="shop-skins-grid" class="skins-grid"></div>
+                </div>
+                <div id="shop-content-maps" class="shop-tab-content hidden">
+                    <div id="shop-maps-grid" class="maps-grid"></div>
+                </div>
+                <div id="shop-content-themes" class="shop-tab-content hidden">
+                    <div id="shop-themes-list" class="themes-list"></div>
+                </div>
+
+                <button id="close-shop-btn" class="btn btn-primary" style="margin-top: 14px;">
+                    MAĞAZADAN ÇIK
+                </button>
+            </div>
+        </div>
+
+        <!-- Purchase Confirmation Modal -->
+        <div id="purchase-confirm-modal" class="overlay-screen hidden" style="z-index: 10000;">
+            <div class="menu-card confirm-card" style="max-width: 360px; text-align: center;">
+                <h3 id="confirm-item-title" class="card-title neon-gold" style="font-size: 1.2rem; margin-bottom: 6px;">🛒 ÜRÜN SATIN AL</h3>
+                <div id="confirm-item-preview" style="margin: 8px 0; display: flex; justify-content: center;"></div>
+                <p id="confirm-item-desc" class="card-desc" style="font-size: 0.82rem; margin-bottom: 12px; color: #e2e8f0;"></p>
+                <div class="confirm-price-tag" style="font-size: 1.1rem; font-weight: 800; color: #ffd700; margin-bottom: 14px; background: rgba(255, 215, 0, 0.1); padding: 8px; border-radius: 10px; border: 1px solid rgba(255, 215, 0, 0.3);">
+                    Fiyat: <span id="confirm-item-price">250</span> 🪙 COIN
+                </div>
+                <div style="display: flex; gap: 10px; width: 100%;">
+                    <button id="cancel-purchase-btn" class="btn btn-secondary" style="flex: 1; padding: 10px;">İPTAL</button>
+                    <button id="confirm-purchase-btn" class="btn btn-primary btn-glow" style="flex: 1; padding: 10px; background: linear-gradient(135deg, #10b981, #059669);">SATIN AL</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alert Modal -->
+        <div id="alert-modal" class="overlay-screen hidden" style="z-index: 10001;">
+            <div class="menu-card confirm-card" style="max-width: 340px; text-align: center;">
+                <h3 id="alert-title" class="card-title neon-red" style="font-size: 1.15rem; margin-bottom: 6px;">⚠️ YETERLİ COIN YOK</h3>
+                <p id="alert-desc" class="card-desc" style="font-size: 0.82rem; margin-bottom: 14px; color: #cbd5e1;"></p>
+                <button id="close-alert-btn" class="btn btn-primary" style="width: 100%;">TAMAM</button>
+            </div>
+        </div>
+
+        <!-- Game Over Modal -->
+        <div id="game-over-modal" class="overlay-screen hidden">
+            <div class="menu-card game-over-card">
+                <h2 class="card-title neon-red">💀 OYUN BİTTİ</h2>
+                <div id="new-high-score-banner" class="high-score-banner hidden">
+                    🎉 YENİ EN YÜKSEK SKOR!
+                </div>
+                
+                <div class="final-score-box">
+                    <div class="final-score-item">
+                        <span class="label">🏆 SKORUNUZ</span>
+                        <span id="final-score" class="value">0</span>
+                    </div>
+                    <div class="final-score-divider"></div>
+                    <div class="final-score-item">
+                        <span class="label">👑 EN YÜKSEK</span>
+                        <span id="final-high-score" class="value">0</span>
+                    </div>
+                </div>
+
+                <div class="game-over-coins-box" style="margin-top: 10px; padding: 10px 14px; background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 14px; display: flex; justify-content: space-around; align-items: center;">
+                    <div style="text-align: center;">
+                        <span style="font-size: 0.7rem; color: #a1a1aa; display: block; font-weight: 600;">KAZANILAN COIN</span>
+                        <span id="game-over-earned-coins" style="font-size: 1.05rem; font-weight: 800; color: #22c55e;">+0 COIN</span>
+                    </div>
+                    <div style="width: 1px; height: 26px; background: rgba(255,255,255,0.15);"></div>
+                    <div style="text-align: center;">
+                        <span style="font-size: 0.7rem; color: #a1a1aa; display: block; font-weight: 600;">KAZANILAN XP</span>
+                        <span id="game-over-earned-xp" style="font-size: 1.05rem; font-weight: 800; color: #c084fc;">+0 XP</span>
+                    </div>
+                    <div style="width: 1px; height: 26px; background: rgba(255,255,255,0.15);"></div>
+                    <div style="text-align: center;">
+                        <span style="font-size: 0.7rem; color: #a1a1aa; display: block; font-weight: 600;">TOPLAM COIN</span>
+                        <span id="game-over-total-coins" style="font-size: 1.05rem; font-weight: 800; color: #ffd700;">100 COIN</span>
+                    </div>
+                </div>
+
+                <div class="menu-buttons" style="margin-top: 14px;">
+                    <button id="play-again-btn" class="btn btn-primary btn-glow">
+                        🔄 TEKRAR OYNA
+                    </button>
+                    <button id="main-menu-btn" class="btn btn-secondary">
+                        🏠 ANA MENÜ
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Level & Rewards Modal -->
+        <div id="level-rewards-modal" class="overlay-screen hidden">
+            <div class="menu-card modal-large-card">
+                <div class="modal-header">
+                    <h2 class="card-title neon-gold" style="margin: 0; font-size: 1.25rem;">⭐ SEVİYE VE ÖDÜLLER</h2>
+                    <div id="level-title-badge" class="summary-pill" style="color: #f59e0b; border-color: rgba(245, 158, 11, 0.4);">
+                        🐣 Beginner
+                    </div>
+                </div>
+
+                <!-- Level Summary Card -->
+                <div class="stats-overview-box" style="margin-bottom: 12px; background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span id="lvl-modal-level-display" style="font-size: 1.1rem; font-weight: 900; color: #e9d5ff;">SEVİYE 1</span>
+                        <span id="lvl-modal-title-display" style="font-size: 0.85rem; font-weight: 800; color: #fbbf24;">🐣 Beginner</span>
+                    </div>
+                    <div class="progress-bar-container" style="margin-bottom: 8px;">
+                        <div class="progress-bar-label">
+                            <span>XP İLERLEMESİ</span>
+                            <strong id="lvl-modal-xp-percent">0%</strong>
+                        </div>
+                        <div class="progress-track" style="height: 10px;">
+                            <div id="lvl-modal-xp-fill" class="progress-fill" style="width: 0%; background: linear-gradient(90deg, #a855f7, #ec4899);"></div>
+                        </div>
+                    </div>
+                    <div class="mini-stats-grid" style="grid-template-columns: repeat(3, 1fr);">
+                        <div class="mini-stat-item">
+                            <span class="mini-stat-label">MEVCUT XP</span>
+                            <span id="lvl-modal-current-xp" class="mini-stat-val">0</span>
+                        </div>
+                        <div class="mini-stat-item">
+                            <span class="mini-stat-label">HEDEF XP</span>
+                            <span id="lvl-modal-next-xp" class="mini-stat-val">100</span>
+                        </div>
+                        <div class="mini-stat-item">
+                            <span class="mini-stat-label">TOPLAM XP</span>
+                            <span id="lvl-modal-total-xp" class="mini-stat-val">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Next Reward Preview Box -->
+                <div id="lvl-next-reward-box" style="margin-bottom: 12px; background: rgba(0, 0, 0, 0.3); border-radius: 12px; padding: 10px; border: 1px solid rgba(255, 215, 0, 0.3); display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <span style="font-size: 0.65rem; color: #94a3b8; font-weight: 800; display: block;">SONRAKİ SEVİYE ÖDÜLÜ</span>
+                        <strong id="lvl-next-reward-title" style="font-size: 0.9rem; color: #ffd700;">+50 Coin</strong>
+                    </div>
+                    <span id="lvl-next-reward-num" style="font-size: 0.8rem; font-weight: 900; color: #c084fc; background: rgba(168, 85, 247, 0.2); padding: 4px 8px; border-radius: 6px;">LVL 2</span>
+                </div>
+
+                <!-- Rewards List -->
+                <div id="level-rewards-list" class="achievements-list" style="max-height: 240px; overflow-y: auto;"></div>
+
+                <button id="close-level-rewards-btn" class="btn btn-primary" style="margin-top: 12px;">
+                    KAPAT
+                </button>
+            </div>
+        </div>
+
+        <!-- Level Up Animation Modal -->
+        <div id="level-up-modal" class="overlay-screen hidden" style="z-index: 10005; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px);">
+            <div class="menu-card level-up-card" style="text-align: center; max-width: 360px; border: 2px solid #a855f7; box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);">
+                <div style="font-size: 2.2rem; margin-bottom: 4px;">🎉</div>
+                <h2 class="card-title neon-gold" style="font-size: 1.6rem; margin-bottom: 4px; letter-spacing: 2px;">LEVEL UP!</h2>
+                <p style="font-size: 0.8rem; color: #cbd5e1; margin-bottom: 12px; font-weight: 700;">TEBRİKLER, SEVİYE ATLADIN!</p>
+
+                <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 12px;">
+                    <div style="background: rgba(255,255,255,0.05); padding: 8px 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                        <span style="font-size: 0.65rem; color: #94a3b8; display: block; font-weight: 700;">ÖNCEKİ</span>
+                        <span id="lvlUp-old-num" style="font-size: 1.1rem; font-weight: 900; color: #94a3b8;">LVL 1</span>
+                    </div>
+                    <div style="font-size: 1.2rem; color: #a855f7;">➔</div>
+                    <div style="background: rgba(168, 85, 247, 0.2); padding: 8px 16px; border-radius: 12px; border: 1px solid #a855f7; box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);">
+                        <span style="font-size: 0.65rem; color: #c084fc; display: block; font-weight: 700;">YENİ SEVİYE</span>
+                        <span id="lvlUp-new-num" style="font-size: 1.4rem; font-weight: 900; color: #ffd700;">LVL 2</span>
+                    </div>
+                </div>
+
+                <div id="lvlUp-title-badge" style="display: inline-block; padding: 6px 14px; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 20px; font-size: 0.85rem; font-weight: 800; color: #f59e0b; margin-bottom: 14px;">
+                    🏆 SNAKE EXPERT
+                </div>
+
+                <div id="lvlUp-reward-box" style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); padding: 10px; border-radius: 12px; margin-bottom: 16px;">
+                    <span style="font-size: 0.7rem; color: #86efac; display: block; font-weight: 700;">KAZANILAN ÖDÜL</span>
+                    <strong id="lvlUp-reward-text" style="font-size: 1.05rem; color: #ffd700;">+50 Coin</strong>
+                </div>
+
+                <button id="close-lvlUp-btn" class="btn btn-primary btn-glow" style="width: 100%; background: linear-gradient(135deg, #a855f7, #ec4899);">
+                    HARİKA!
+                </button>
+            </div>
+        </div>
+
+        <!-- Floating Coin Toast -->
+        <div id="coin-toast" class="coin-toast hidden">+10 COIN</div>
+
+        <!-- Floating XP Toast -->
+        <div id="xp-toast" class="xp-toast hidden">+15 XP</div>
+
+        <!-- Achievement Unlocked Toast Banner -->
+        <div id="achievement-toast" class="achievement-toast hidden">
+            <div class="ach-toast-header">
+                <span class="ach-toast-headline">🏆 BAŞARIM AÇILDI!</span>
+            </div>
+            <div class="ach-toast-body">
+                <div class="ach-toast-details">
+                    <strong id="ach-toast-title" class="ach-toast-title">Snake Beginner</strong>
+                    <p id="ach-toast-desc" class="ach-toast-desc">Tek bir oyunda 100 skor yaptın.</p>
+                </div>
+                <div id="ach-toast-reward" class="ach-toast-reward">+50 COIN</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

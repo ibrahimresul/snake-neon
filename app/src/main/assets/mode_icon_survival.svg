@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <filter id="glowSurvival" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3.5" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Dark Octagonal Card Background -->
+  <polygon points="25,5 95,5 115,25 115,95 95,115 25,115 5,95 5,25" fill="#042018" stroke="#10b981" stroke-width="3" filter="url(#glowSurvival)" />
+  <polygon points="27,8 93,8 112,27 112,93 93,112 27,112 8,93 8,27" fill="none" stroke="#6ee7b7" stroke-width="1.2" opacity="0.6" />
+
+  <!-- Shield Shape -->
+  <g filter="url(#glowSurvival)">
+    <path d="M 60 26 L 86 36 C 86 64, 72 84, 60 92 C 48 84, 34 64, 34 36 Z" 
+          fill="#064e3b" stroke="#10b981" stroke-width="4" stroke-linejoin="round" />
+    
+    <!-- Medical / Health Plus Cross -->
+    <path d="M 60 44 V 74 M 45 59 H 75" stroke="#34d399" stroke-width="6" stroke-linecap="round" />
+    <path d="M 60 44 V 74 M 45 59 H 75" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" />
+  </g>
+</svg>

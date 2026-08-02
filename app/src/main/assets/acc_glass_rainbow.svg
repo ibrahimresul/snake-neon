@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50">
+  <defs>
+    <linearGradient id="rainGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="25%" stop-color="#f97316"/>
+      <stop offset="50%" stop-color="#eab308"/>
+      <stop offset="75%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+  </defs>
+  <path d="M5 12 Q25 8 50 12 Q75 8 95 12 L92 20 Q90 40 70 42 Q52 42 48 20 Q45 42 28 42 Q10 40 8 20 Z" fill="url(#rainGrad)" stroke="#111" stroke-width="3"/>
+  <path d="M46 18 L54 18" stroke="#111" stroke-width="4"/>
+  <path d="M12 16 Q28 12 44 16 L40 36 Q28 38 14 34 Z" fill="rgba(255,255,255,0.2)"/>
+  <path d="M56 16 Q72 12 88 16 L86 34 Q72 38 60 36 Z" fill="rgba(255,255,255,0.2)"/>
+</svg>

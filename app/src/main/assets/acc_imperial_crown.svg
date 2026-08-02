@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="impGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="50%" stop-color="#eab308"/>
+      <stop offset="100%" stop-color="#854d0e"/>
+    </linearGradient>
+    <radialGradient id="impVelvet" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="70%" stop-color="#b91c1c"/>
+      <stop offset="100%" stop-color="#7f1d1d"/>
+    </radialGradient>
+    <filter id="impShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <g filter="url(#impShadow)">
+    <!-- Red Velvet Inner Dome -->
+    <path d="M 22,78 C 20,40 40,32 60,32 C 80,32 100,40 98,78 Z" fill="url(#impVelvet)" stroke="#450a0a" stroke-width="2"/>
+    <!-- Golden Arches crossing top -->
+    <path d="M 22,76 C 22,42 42,22 60,22 C 78,22 98,42 98,76" fill="none" stroke="url(#impGold)" stroke-width="6" stroke-linecap="round"/>
+    <path d="M 22,76 C 22,42 42,22 60,22 C 78,22 98,42 98,76" fill="none" stroke="#713f12" stroke-width="1.5"/>
+    <path d="M 60,22 L 60,78" fill="none" stroke="url(#impGold)" stroke-width="6"/>
+    <path d="M 60,22 L 60,78" fill="none" stroke="#713f12" stroke-width="1.5"/>
+    <!-- Top Orb (Globe) -->
+    <circle cx="60" cy="20" r="6" fill="url(#impGold)" stroke="#713f12" stroke-width="1.5"/>
+    <!-- Top Cross -->
+    <path d="M 60,8 L 60,16 M 56,11 L 64,11" stroke="url(#impGold)" stroke-width="3" stroke-linecap="square"/>
+    <path d="M 60,8 L 60,16 M 56,11 L 64,11" stroke="#713f12" stroke-width="1" stroke-linecap="square"/>
+    <!-- Fleur-de-lis / Leaf points along rim -->
+    <path d="M 20,72 Q 28,60 36,72" fill="url(#impGold)" stroke="#713f12" stroke-width="1.5"/>
+    <path d="M 44,72 Q 52,58 60,72" fill="url(#impGold)" stroke="#713f12" stroke-width="1.5"/>
+    <path d="M 68,72 Q 76,58 84,72" fill="url(#impGold)" stroke="#713f12" stroke-width="1.5"/>
+    <path d="M 84,72 Q 92,60 100,72" fill="url(#impGold)" stroke="#713f12" stroke-width="1.5"/>
+    <!-- Bottom Rim Band with Rubies & Pearls -->
+    <rect x="18" y="74" width="84" height="14" rx="4" fill="url(#impGold)" stroke="#713f12" stroke-width="2"/>
+    <circle cx="28" cy="81" r="3" fill="#ef4444" stroke="#7f1d1d" stroke-width="1"/>
+    <circle cx="44" cy="81" r="2.5" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+    <circle cx="60" cy="81" r="3.5" fill="#38bdf8" stroke="#0369a1" stroke-width="1"/>
+    <circle cx="76" cy="81" r="2.5" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+    <circle cx="92" cy="81" r="3" fill="#ef4444" stroke="#7f1d1d" stroke-width="1"/>
+  </g>
+</svg>

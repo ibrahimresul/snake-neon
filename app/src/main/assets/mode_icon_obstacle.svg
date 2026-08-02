@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <filter id="glowObstacle" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3.5" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Dark Octagonal Card Background -->
+  <polygon points="25,5 95,5 115,25 115,95 95,115 25,115 5,95 5,25" fill="#1d072b" stroke="#a855f7" stroke-width="3" filter="url(#glowObstacle)" />
+  <polygon points="27,8 93,8 112,27 112,93 93,112 27,112 8,93 8,27" fill="none" stroke="#d8b4fe" stroke-width="1.2" opacity="0.6" />
+
+  <!-- Obstacle Grid Blocks -->
+  <rect x="26" y="26" width="12" height="12" rx="2" fill="#7e22ce" stroke="#c084fc" stroke-width="1" />
+  <rect x="82" y="26" width="12" height="12" rx="2" fill="#7e22ce" stroke="#c084fc" stroke-width="1" />
+  <rect x="26" y="82" width="12" height="12" rx="2" fill="#7e22ce" stroke="#c084fc" stroke-width="1" />
+  <rect x="82" y="82" width="12" height="12" rx="2" fill="#7e22ce" stroke="#c084fc" stroke-width="1" />
+  <rect x="54" y="54" width="12" height="12" rx="2" fill="#9333ea" stroke="#e879f9" stroke-width="1.5" filter="url(#glowObstacle)" />
+
+  <!-- Snake Weaving Path -->
+  <g filter="url(#glowObstacle)">
+    <path d="M 30 70 H 46 V 40 H 74 V 70 H 90" fill="none" stroke="#d946ef" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M 30 70 H 46 V 40 H 74 V 70 H 90" fill="none" stroke="#f472b6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+    <!-- Snake Head -->
+    <rect x="86" y="64" width="12" height="12" rx="3" fill="#e879f9" />
+    <circle cx="92" cy="68" r="1.5" fill="#1e042b" />
+  </g>
+</svg>

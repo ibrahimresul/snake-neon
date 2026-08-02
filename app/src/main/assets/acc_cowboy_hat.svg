@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="cowboyCrown" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="50%" stop-color="#b45309"/>
+      <stop offset="100%" stop-color="#78350f"/>
+    </linearGradient>
+    <linearGradient id="cowboyBrim" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#92400e"/>
+    </linearGradient>
+    <filter id="cowboyShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <g filter="url(#cowboyShadow)">
+    <!-- Crown with center crease indent -->
+    <path d="M 38,70 C 35,42 45,35 52,40 C 58,45 62,45 68,40 C 75,35 85,42 82,70 Z" fill="url(#cowboyCrown)" stroke="#451a03" stroke-width="2"/>
+    <!-- Crease Shadow line -->
+    <path d="M 60,42 Q 60,58 60,68" fill="none" stroke="#451a03" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+    <!-- Dark Band -->
+    <path d="M 36,66 Q 60,73 84,66 L 85,73 Q 60,80 35,73 Z" fill="#451a03" stroke="#270e04" stroke-width="1"/>
+    <!-- Wide Brim with turned-up sides -->
+    <path d="M 10,75 C 20,60 35,70 60,74 C 85,70 100,60 110,75 C 105,92 80,95 60,95 C 40,95 15,92 10,75 Z" fill="url(#cowboyBrim)" stroke="#451a03" stroke-width="2"/>
+    <!-- Inner Brim Curve Shading -->
+    <path d="M 22,78 Q 60,88 98,78" fill="none" stroke="#78350f" stroke-width="2"/>
+  </g>
+</svg>

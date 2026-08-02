@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <filter id="glowEndless" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3.5" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <linearGradient id="infGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f3ff" />
+      <stop offset="50%" stop-color="#a855f7" />
+      <stop offset="100%" stop-color="#ec4899" />
+    </linearGradient>
+  </defs>
+
+  <!-- Dark Octagonal Card Background -->
+  <polygon points="25,5 95,5 115,25 115,95 95,115 25,115 5,95 5,25" fill="#150826" stroke="#c084fc" stroke-width="3" filter="url(#glowEndless)" />
+  <polygon points="27,8 93,8 112,27 112,93 93,112 27,112 8,93 8,27" fill="none" stroke="#e879f9" stroke-width="1.2" opacity="0.6" />
+
+  <!-- Infinity Symbol -->
+  <path d="M 40 50 C 25 50 25 70 40 70 C 55 70 65 50 80 50 C 95 50 95 70 80 70 C 65 70 55 50 40 50 Z" 
+        fill="none" stroke="url(#infGrad)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" filter="url(#glowEndless)" />
+
+  <!-- Looping Snake underneath -->
+  <g opacity="0.9">
+    <rect x="25" y="78" width="9" height="9" rx="2" fill="#38bdf8" />
+    <rect x="35" y="78" width="9" height="9" rx="2" fill="#818cf8" />
+    <rect x="45" y="78" width="9" height="9" rx="2" fill="#c084fc" />
+    <rect x="55" y="78" width="9" height="9" rx="2" fill="#e879f9" />
+    <rect x="65" y="78" width="9" height="9" rx="2" fill="#38bdf8" />
+    <!-- Snake Head -->
+    <rect x="75" y="76" width="13" height="11" rx="3" fill="#00f3ff" filter="url(#glowEndless)" />
+    <circle cx="82" cy="79" r="1.5" fill="#090c14" />
+  </g>
+</svg>

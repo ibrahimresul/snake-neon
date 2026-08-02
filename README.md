@@ -1,6 +1,11 @@
 # 🐍 Snake Neon 
 
 <img width="2447" height="2400" alt="qw1" src="https://github.com/user-attachments/assets/0b891ea3-8fa6-4335-8371-874d255932a5" />
+<img width="2447" height="2400" alt="qw2" src="https://github.com/user-attachments/assets/dd6b54ba-b3aa-4588-a897-07a5864adb91" />
+<img width="2447" height="2400" alt="qw3" src="https://github.com/user-attachments/assets/033d3717-5a64-4642-9684-474dc5a45d96" />
+<img width="2447" height="2400" alt="qw4" src="https://github.com/user-attachments/assets/b2ea806e-49ac-4136-a40d-42a0a3f845f0" />
+<img width="2447" height="2400" alt="qw5" src="https://github.com/user-attachments/assets/1cc41225-71e8-4a25-85d8-d70ba87a2387" />
+
 
 
 
